@@ -1,0 +1,66 @@
+name: Java CI with Maven
+on: workflow_dispatch
+  
+jobs:
+  build-auth-service:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 173
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+      env:
+        super_secret: ${{ secrets.JWT_SECRET }}
+        
+    - name: Build Auth Service with Maven
+      run: |
+        cd authusers
+        mvn -B package
+        
+  build-notifications-service:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 173
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+      env:
+        super_secret: ${{ secrets.JWT_SECRET }}
+        
+    - name: Build Notifications Service with Maven
+      run: |
+        cd notifications
+        mvn -B package
+  
+  build-todo-service:
+  
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up JDK 173
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+      env:
+        super_secret: ${{ secrets.JWT_SECRET }}
+        
+    - name: Build ToDo Service with Maven
+      run: |
+        cd todolist
+        mvn -B package
