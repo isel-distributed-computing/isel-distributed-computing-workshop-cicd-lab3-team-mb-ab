@@ -16,7 +16,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
       env:
-        super_secret: ${{ secrets.JWT_SECRET }}
+        jwt_secret: ${{ secrets.JWT_SECRET }}
         
     - name: Build Auth Service with Maven
       run: |
@@ -37,7 +37,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
       env:
-        super_secret: ${{ secrets.JWT_SECRET }}
+        jwt_secret: ${{ secrets.JWT_SECRET }}
         
     - name: Build Notifications Service with Maven
       run: |
@@ -58,7 +58,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
       env:
-        super_secret: ${{ secrets.JWT_SECRET }}
+        jwt_secret: ${{ secrets.JWT_SECRET }}
         
     - name: Build ToDo Service with Maven
       run: |
