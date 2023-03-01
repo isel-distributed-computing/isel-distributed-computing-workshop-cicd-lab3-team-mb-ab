@@ -1,8 +1,0 @@
-todolist\notificationservice\service\NotificationService.class
-todolist\notificationservice\service\NotificationsConfig$1.class
-todolist\notificationservice\service\NotificationsConfig.class
-todolist\notificationservice\RestServiceApplication.class
-todolist\notificationservice\service\NotificationsConfig$2.class
-todolist\notificationservice\model\EventModel.class
-todolist\notificationservice\repository\EventRepository.class
-todolist\notificationservice\service\INotificationStrategy.class
