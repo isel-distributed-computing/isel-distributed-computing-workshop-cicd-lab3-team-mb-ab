@@ -1,5 +1,9 @@
 name: Dependent jobs
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+  schedule:
+      # * is a special character in YAML so you have to quote this string
+      - cron:  '10 * * * *'
 
 jobs:
   hello-world-job:
@@ -12,13 +16,13 @@ jobs:
     # Runs a single command using the runner shell
     - name: Run a one-line script
       run: echo 'Hello World'
-  A-job:
+  dependent-a-job:
     needs: hello-world-job
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'A dependent'
-  B-job:
+      - run: echo 'Dependent A'
+  dependent-b-job:
     needs: hello-world-job
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'B dependent'
+      - run: echo 'Dependent B'
