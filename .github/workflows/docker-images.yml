@@ -1,0 +1,50 @@
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+publish-docker-image:
+  strategy:
+      matrix:
+        jdk: [17]
+        os: [ubuntu-18.04, ubuntu-22.04]
+  runs-on: ${{ matrix.os }}
+
+  steps:
+    - name: Log in to the Container registry
+      uses: docker/login-action@v2
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build Auth Service with Maven
+      env:
+          jwt_secret: ${{ secrets.JWT_SECRET }}
+      run: |
+        cd authusers
+        mvn -B package
+
+    - name: Build Notifications Service with Maven
+      run: |
+        cd notifications
+        mvn -B package
+
+    - name: Build ToDo Service with Maven
+        run: |
+          cd todolist
+          mvn -B package
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta-auth
+      uses: docker/metadata-action@v4
+      with:
+        images: ${{ env.REGISTRY}}/${{ env.IMAGE_NAME }}/authusers
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: phase-2/authusers/.
+        file: phase-2/authusers/Dockerfile
+        push: true
+        tags: ${{ steps.meta-auth.outputs.tags }}
+        labels: ${{ steps.meta-auth.outputs.labels }}
