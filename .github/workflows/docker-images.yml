@@ -4,6 +4,7 @@ on: workflow_dispatch
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  jwt_secret: ${{ secrets.JWT_SECRET }}
 
 jobs:
   publish-docker-image:
@@ -29,8 +30,6 @@ jobs:
         cache: maven
 
     - name: Build Auth Service with Maven
-      env:
-          jwt_secret: ${{ secrets.JWT_SECRET }}
       run: |
         cd authusers
         mvn -B package
